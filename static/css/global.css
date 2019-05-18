@@ -1,0 +1,129 @@
+html{
+	height: 100%;
+}
+
+body{
+    font-family: "Scope One", sans-serif;
+    margin: 0;
+	height: 100%;
+}
+
+h1, h2, h3, h4{
+    font-family: "Open Sans", sans-serif;
+}
+
+header{
+    margin:0;
+    padding:0;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+}
+
+/* change the background color */
+.navbar-custom {
+    background-color:rgba(196, 85, 37, 0.3);
+}
+
+img.img-history{
+    height: 200px;
+}
+
+img.img-contact{
+    height: 50px;
+}
+
+img.img-nutriscore{
+    height: 80px;
+}
+
+img.img-product{
+    width: 250px !important;
+}
+
+.media>img{
+    width: 125px !important;
+}
+
+
+h2.contact{
+    color: white;
+}
+
+h1.index, h2.index{
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+h1.search, h2.search{
+    text-transform: capitalize;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+h2.legale{
+    font-size: 35px;
+    font-weight: bold;
+}
+
+h3.legale{
+    font-size: 20px;
+}
+
+h3.contact{
+    color: white;
+}
+
+header nav a {
+    color: #ffffff !important;
+    font-family: "Open Sans", sans-serif;
+}
+
+section#contact{
+    background-color: rgba(222, 148, 64, 1);
+}
+
+/*** PRODUCT THUMBNAIL ***/
+
+.thumbnail{
+    border: 1px solid rgba(222, 226, 230, 1);
+    position:relative;
+}
+
+img.img-thumbnail{
+    height: 225px;
+}
+
+.nutriscores{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 30px;
+    color: white;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 25px;
+    font-family: "Open Sans", sans-serif;
+}
+.nutriscore-a{
+    background-color: rgba(3, 129, 65, 1);
+}
+.nutriscore-b{
+    background-color: rgba(133, 187, 47, 1);
+}
+.nutriscore-c{
+    background-color: rgba(254, 203, 2, 1);
+}
+.nutriscore-d{
+    background-color: rgba(238, 129, 0, 1);
+}
+.nutriscore-e{
+    background-color: rgba(230, 62, 17, 1);
+    color: rgba(255, 255, 255, 1);
+    width: 50px;
+    height: 50px;
+}

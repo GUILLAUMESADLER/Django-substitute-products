@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}404{% endblock %}
+{% load static %}
+<style type="text/css">
+    header {
+        margin:0;
+        padding:0;
+        background-image: url({% static 'img/background.jpg' %});
+        -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+        background-size: cover; /* version standardisée */ }
+</style>
+{% endblock %}
+{% block header %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-0 col-md-3"></div>
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="mt-5 p-2 search">Oups ! Erreur 404</h2>
+        </div>
+        <div class="col-0 col-md-3"></div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-0 col-md-3"></div>
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="pt-4">Cette page n'existe pas !</h2>
+        </div>
+
+        <div class="col-0 col-md-3"></div>
+
+    </div>
+
+</section>
+{% endblock %}

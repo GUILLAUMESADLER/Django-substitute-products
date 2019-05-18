@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% load crispy_forms_tags %}
+{% block css %}
+{% load static %}
+<style type="text/css">
+    header {
+        margin:0;
+        padding:0;
+        background-image: url({% static 'img/background.jpg' %});
+        -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+        background-size: cover; /* version standardisée */ }
+</style>
+{% endblock %}
+{% block header %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-0 col-md-3"></div>
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="mt-5 p-2 search">Déconnexion</h2>
+        </div>
+        <div class="col-0 col-md-3"></div>
+    </div>
+
+</div>
+{% endblock %}
+{% block content %}
+<section class="container-fluid">
+        <div class="row">
+            <div class="col-0 col-md-4"></div>
+            <div class="col-0 col-md-4 text-center">
+                <h2 class="p-4">Au revoir !</h2>
+                <div class="border-top pt-3 pb-5">
+                    <small class="text-muted">
+                        <a href="{% url 'login' %}">Se connecter</a>
+                    </small>
+                </div>
+            </div>
+            <div class="col-0 col-md-4"></div>
+        </div>
+{% endblock %}
