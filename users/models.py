@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-from search.models import Product
+from substitutes.models import Product
 
 
 class Profile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     favorites = models.ManyToManyField(Product)
@@ -13,6 +14,7 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)

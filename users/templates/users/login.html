@@ -1,15 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Profile{% endblock %}
+{% extends "substitutes/base.html" %}
+{% block title %}Connexion{% endblock %}
 {% load crispy_forms_tags %}
 {% block css %}
 {% load static %}
 <style type="text/css">
     header {
-        margin:0;
-        padding:0;
-        background-image: url({% static 'img/background.jpg' %});
-        -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-        background-size: cover; /* version standardisée */ }
+        background-image: url({% static 'substitutes/img/background.jpg' %});
+    }
 </style>
 {% endblock %}
 {% block header %}
@@ -30,10 +27,24 @@
     <div class="row">
         <div class="col-0 col-md-4"></div>
         <div class="col-0 col-md-4">
+            <div class="col-12 p-0 mb-4 mt-4 social-networks text-center">
+
+                <legend class="border-bottom mb-4">Connectez-vous avec les réseaux</legend>
+
+                <button class="btn btn-primary mb-2">
+                    <a href="{% url 'social:begin' 'facebook' %}"><i class="fab fa-facebook-f"></i></a>
+                </button>
+                <button class="btn btn-danger mb-2">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}"><i class="fab fa-google"></i></a>
+                </button>
+                <button class="btn btn-dark mb-2">
+                    <a href="{% url 'social:begin' 'github' %}"><i class="fab fa-github"></i></a><br>
+                </button>
+            </div>
             <form method="POST">
                 {% csrf_token %}
-                <fieldset class="form-group">
-                    <legend class="border-bottom pt-5 mb-4">Connexion</legend>
+                <fieldset class="form-group text-center">
+                    <legend class="border-bottom mb-4">Ou</legend>
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group">

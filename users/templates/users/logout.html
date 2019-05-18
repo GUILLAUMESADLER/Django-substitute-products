@@ -1,15 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Profile{% endblock %}
+{% extends "substitutes/base.html" %}
+{% block title %}Déconnexion{% endblock %}
 {% load crispy_forms_tags %}
 {% block css %}
 {% load static %}
 <style type="text/css">
     header {
-        margin:0;
-        padding:0;
-        background-image: url({% static 'img/background.jpg' %});
-        -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-        background-size: cover; /* version standardisée */ }
+        background-image: url({% static 'substitutes/img/background.jpg' %});
+    }
 </style>
 {% endblock %}
 {% block header %}
