@@ -120,7 +120,7 @@
                         data-toggle="popover"
                         data-placement="top"
                         data-trigger="focus"
-                        data-content="{% if product.nutriscore > averages.nutriscore %} Ce produit est bien noté que la moyenne. {% else %} Ce produit est mieux noté que la moyenne. {% endif %}">
+                        data-content="{% if product.nutriscore > averages.nutriscore %} Ce produit est moins bien noté que la moyenne. {% else %} Ce produit est mieux noté que la moyenne. {% endif %}">
                         {% if product.nutriscore == 1 %}
                             A
                         {% elif product.nutriscore == 2 %}
