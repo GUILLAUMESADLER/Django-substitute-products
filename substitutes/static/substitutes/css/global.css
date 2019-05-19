@@ -2,8 +2,10 @@
 CSS FILES FOR PURBEURREV2
 
 AUTHOR : Guillaume SADLER
-DATE : 04/2019
+DATE : 05/2019
 **********/
+
+/*** GLOBAL ***/
 
 body{
     font-family: "Scope One", sans-serif;
@@ -13,7 +15,9 @@ h1, h2, h3, h4{
     font-family: "Open Sans", sans-serif;
 }
 
-/* BASE > HEADER CUSTOMIZATION */
+/*** BASE ***/
+
+/** BASE > HEADER CUSTOMIZATION **/
 header{
     background-image: url('/static/substitutes/img/background.jpg');
     background-repeat: no-repeat;
@@ -39,7 +43,7 @@ header h2{
     font-size: 30px;
 }
 
-/* BASE > NAVBAR CUSTOMIZATION */
+/** BASE > NAVBAR CUSTOMIZATION **/
 .navbar-custom {
     background-color:rgba(196, 85, 37, 0.3);
 }
@@ -53,7 +57,8 @@ header h2{
     color: rgba(255, 255, 255, 1) !important;
 }
 
-/* BASE > FOOTER CUSTOMIZATION */
+/** BASE > FOOTER CUSTOMIZATION **/
+
 .page-footer{
     bottom:0;
 }
@@ -75,7 +80,7 @@ header h2{
     color: rgba(0, 0, 0, 1);
 }
 
-/* SEARCH INDEX */
+/*** SUBSTITUTES INDEX ***/
 
 #history img{
     height: 200px;
@@ -97,7 +102,7 @@ header h2{
     font-size: 1em;
 }
 
-/* PRODUCT THUMBNAIL */
+/*** PRODUCT THUMBNAIL ***/
 
 .thumbnail{
     border: 1px solid rgba(222, 226, 230, 1);
@@ -108,7 +113,7 @@ header h2{
     height: 225px;
 }
 
-/* REFERENCE PRODUCT THUMBNAIL */
+/** PRODUCT THUMBNAIL > REFERENCE THUMBNAIL **/
 
 .ref-thumbnail{
     background-color: #00A65D;
@@ -118,51 +123,7 @@ header h2{
     height: 225px;
 }
 
-/* PRODUCT PAGE */
-
-.benchmark{
-    text-align: left;
-}
-
-.benchmark img.nova{
-    height: 100px;
-}
-
-.benchmark img.nutriscore{
-    height: 120px;
-}
-
-.nutritional-benchmarks h3{
-    color: rgba(0, 0, 0, 1);
-    font-size: 20px;
-}
-
-.nutritional-benchmarks{
-    color: rgba(255, 255, 255, 1);
-    font-weight: bold;
-}
-
-.average-lower{
-    background-color: rgba(3, 129, 65, 1);
-}
-
-.average-medium{
-    background-color: rgba(238, 129, 0, 1);
-}
-
-.average-upper{
-    background-color: rgba(230, 62, 17, 1);
-}
-
-img.product{
-    height: 300px;
-}
-
-img.sugar-cube{
-    height: 45px;
-}
-
-/* PRODUCT NUTRISCORE */
+/** PRODUCT THUMBNAIL > NUTRISCORES **/
 
 .nutriscores{
     width: 50px;
@@ -192,13 +153,15 @@ img.sugar-cube{
     background-color: rgba(230, 62, 17, 1);
 }
 
-/* PROFIL */
+/*** PROFIL ***/
 
 .social-networks a{
     color: rgba(255, 255, 255, 1);
 }
 
-/* PRODUCT INTRODUCTION */
+/*** PRODUCT SHEET ***/
+
+/** PRODUCT SHEET > INTRODUCTION **/
 
 #product-intro{
     background-color: rgba(255, 255, 255, 1);
@@ -216,14 +179,6 @@ img.sugar-cube{
     font-size: 25px;
 }
 
-#product-intro img.nova{
-    height: 90px;
-}
-
-#product-intro img.nutriscore{
-    height: 90px;
-}
-
 .roundedImage{
     overflow:hidden;
     -webkit-border-radius: 50px;
@@ -233,18 +188,43 @@ img.sugar-cube{
     height: 250px;
 }
 
-/* PRODUCT NUTRIMENTS REFERENCES */
+/** PRODUCT SHEET > NUTRIMENTS **/
+
+#product-nutriments .nutriscores{
+    width: 25px;
+    height: 25px;
+    color: white;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 10px;
+    font-family: "Open Sans", sans-serif;
+}
+
+#product-nutriments .nutriments-popover{
+    width: 100%;
+}
 
 #product-nutriments img{
     height: 50px;
 }
 
-/* product-ingredients */
+/** PRODUCT SHEET > INGREDIENTS **/
 
 #product-ingredients{
-    background-color: rgba(196, 85, 37, 1);
+    background-color: rgba(232, 167, 93, 1);
 }
 
 #product-ingredients h2{
+    font-weight: bold;
+}
+
+/** PRODUCT SHEET > STORES **/
+
+#product-stores{
+    background-color: rgba(196, 85, 37, 1);
+}
+
+#product-stores h2{
     font-weight: bold;
 }
