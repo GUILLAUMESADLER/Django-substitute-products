@@ -18,13 +18,15 @@ def index(request):
 
     return render(request, 'substitutes/index.html', locals())
 
-def results(request):
+def results(request, name=None):
     """
     Search in database all products whose name matches with keyword(s)
     entered by user.
     """
 
-    if request.method == 'POST':
+    if name is not None:
+        user_keywords = name
+    elif request.method == 'POST':
         user_keywords = request.POST.get("product-name")
     else:
         user_keywords = request.GET.get('name')

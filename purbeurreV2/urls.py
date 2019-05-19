@@ -28,6 +28,7 @@ urlpatterns = [
     # SUBSTITUTES APP
     path('', sub_views.index, name='index'),
     path('results/', sub_views.results, name='results'),
+    path('results/<str:name>', sub_views.results, name='results'),
     path('product/<int:id>', sub_views.product, name='product'),
     path('substitutes/<int:id>', sub_views.substitutes, name='substitutes'),
     path('favorites', sub_views.favorites, name='favorites'),
