@@ -2,6 +2,12 @@
 > OpenClassrooms project 11 - <a href="https://openclassrooms.com/fr/paths/68-developpeur-dapplication-python">Python app devloper</a>
 > Tags : Python, Openfoodfacts
 
+## Run
+- After installation, in your virtual environment use this command line :
+```shell
+$ pip python manage.py runserver
+```
+
 ## Installation
 
 ### Clone
@@ -17,6 +23,11 @@ $ pip install -r requirements.txt
 ```
 
 ### Manual setup
+
+- Activate veritual env
+```shell
+$ python3 -m venv venv
+```
 
 - Activate the virtual environment
 ```shell
