@@ -35,7 +35,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Votre compte à été modifié !')
+            messages.success(request, 'Votre compte à été modifié !')
             return redirect('profile')
 
     else:
