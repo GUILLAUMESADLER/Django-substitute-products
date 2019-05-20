@@ -11,7 +11,7 @@ class Profile(models.Model):
     favorites = models.ManyToManyField(Product)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return "{} Profile".format(self.user.username)
 
     def save(self, *args, **kwargs):
 
