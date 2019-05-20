@@ -119,8 +119,9 @@ class ComparativeProducts():
                     "score": score
                 }
 
-                temp_ladder.append(product_ladder)
-                temp_ladder.sort(key=lambda x: x['score'], reverse=False)
+                if product != reference:
+                    temp_ladder.append(product_ladder)
+                    temp_ladder.sort(key=lambda x: x['score'], reverse=False)
 
         for ladder_line in temp_ladder:
             self.ladder.append(ladder_line["product"])
