@@ -11,6 +11,9 @@ branches:
 
 env: DJANGO_SETTINGS_MODULE="purbeurreV2.settings.travis"
 
+addons:
+  postgresql: "9.6"
+
 services:
   - postgresql
 
