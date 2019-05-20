@@ -108,3 +108,4 @@ venv.bak/
 
 # Django static files
 static
+purbeurreV2/settings/local.py
