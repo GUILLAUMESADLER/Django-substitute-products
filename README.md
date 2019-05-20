@@ -8,6 +8,15 @@
 $ pip python manage.py runserver
 ```
 
+## Test
+- For run the tests :
+```shell
+$ pip python manage.py test substitutes
+```
+```shell
+$ pip python manage.py test users
+```
+
 ## Installation
 
 ### Clone

@@ -27,12 +27,45 @@ class TestViews(TestCase):
             stores = "Netto",
             nutriscore = 5,
             categories = "meats,prepared-meats,fresh-foods,saucissons,andouilles,saucissons-cuits",
-            ingredients = '[{"rank": 1, "text": "Chaudins", "id": "fr:Chaudins"}, {"text": "rosettes", "id": "fr:rosettes", "rank": 2}, {"rank": 3, "id": "fr:gras-et-couenne-de-porc", "text": "gras et couenne de porc"}, {"rank": 4, "text": "sel", "id": "en:salt"}, {"text": "\u00e9pices", "id": "en:spice", "rank": 5}, {"rank": 6, "id": "en:spice", "text": "aromates"}, {"rank": 7, "text": "conservateur", "id": "en:preservative"}, {"text": "nitrite de sodium", "id": "fr:nitrite-de-sodium", "rank": 8}, {"rank": 9, "id": "en:flavouring", "text": "ar\u00f4mes"}]',
-            nutriments = '{"carbohydrates": "", "carbohydrates_100g": "", "energy_kcal": "", "energy_kcal_100g": "", "energy_kj": "", "energy_kj_100g": "", "fat": "", "fat_100g": "", "fiber": "", "fiber_100g": "", "proteins": "", "proteins_100g": "", "salt": "", "salt_100g": "", "saturated-fat": "", "saturated-fat_100g": "", "sodium": "", "sodium_100g": "", "sugars": "", "sugars_100g": "", "sugars_block": ""}',
+            ingredients = '[\
+                {"rank": 1, "text": "Chaudins", "id": "fr:Chaudins"}, \
+                {"text": "rosettes", "id": "fr:rosettes", "rank": 2}, \
+                {"rank": 3, "id": "fr:gras-et-couenne-de-porc", "text": "gras et couenne de porc"}, \
+                {"rank": 4, "text": "sel", "id": "en:salt"}, \
+                {"text": "\u00e9pices", "id": "en:spice", "rank": 5}, \
+                {"rank": 6, "id": "en:spice", "text": "aromates"}, \
+                {"rank": 7, "text": "conservateur", "id": "en:preservative"}, \
+                {"text": "nitrite de sodium", "id": "fr:nitrite-de-sodium", "rank": 8}, \
+                {"rank": 9, "id": "en:flavouring", "text": "ar\u00f4mes"} \
+            ]',
+            nutriments = '{\
+                "carbohydrates": 0.0, \
+                "carbohydrates_100g": 0, \
+                "energy_kcal": 0, \
+                "energy_kcal_100g": 0, \
+                "energy_kj": 0, \
+                "energy_kj_100g": 0, \
+                "fat": 0, \
+                "fat_100g": 0, \
+                "fiber": 0, \
+                "fiber_100g": 0, \
+                "proteins": 0, \
+                "proteins_100g": 0, \
+                "salt": 0, \
+                "salt_100g": 0, \
+                "saturated-fat": 0, \
+                "saturated-fat_100g": 0, \
+                "sodium": 0, \
+                "sodium_100g": 0, \
+                "sugars": 0, \
+                "sugars_100g": 0, \
+                "sugars_block": 0 \
+            }',
         )
 
     def setUp(self):
         self.client = Client()
+
 
     def test_index(self):
         response = self.client.get(reverse("index"))
@@ -63,29 +96,29 @@ class TestViews(TestCase):
     @login_required
     def test_add_favorite_connected(self):
         self.client.login(username="test", password="testing")
-        response = self.client.get(reverse("add_favorite", args=[1]))
+        response = self.client.get(reverse("add_favorite", args=[self.product.id]))
         self.assertEquals(response.status_code, 200)
 
     @login_required
     def test_add_favorite_no_connected(self):
-        response = self.client.get(reverse("add_favorite", args=[1]))
+        response = self.client.get(reverse("add_favorite", args=[self.product.id]))
         self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, '/login/?next=/add_favorite/1')
+        self.assertRedirects(response, '/login/?next=/add_favorite/{}'.format(self.product.id))
 
     @login_required
     def test_del_favorite_connected(self):
         self.client.login(username="test", password="testing")
-        response = self.client.get(reverse("del_favorite", args=[1]))
+        response = self.client.get(reverse("del_favorite", args=[self.product.id]))
         self.assertEquals(response.status_code, 200)
 
     @login_required
     def test_del_favorite_no_connected(self):
-        response = self.client.get(reverse("del_favorite", args=[1]))
+        response = self.client.get(reverse("del_favorite", args=[self.product.id]))
         self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, '/login/?next=/del_favorite/1')
+        self.assertRedirects(response, '/login/?next=/del_favorite/{}'.format(self.product.id))
 
     def test_substitutes(self):
-        response = self.client.get(reverse("substitutes", args=[1]))
+        response = self.client.get(reverse("substitutes", args=[self.product.id]))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'substitutes/sub_result.html')
 
@@ -95,6 +128,6 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'substitutes/legales_notices.html')
 
     def test_product(self):
-        response = self.client.get(reverse("product", args=[1]))
+        response = self.client.get(reverse("product", args=[self.product.id]))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'substitutes/product.html')
