@@ -14,11 +14,9 @@ class ComparativeProducts():
 
     def __init__(self):
         """
-        products_list (list): Sample products to compare with the ref product
         ladder        (list): Result of the comparison. (List of products)
         """
 
-        self.products_list = None
         self.ladder = []
 
     def get_substitutes(self, reference=None, sample=None):
@@ -130,8 +128,6 @@ class ComparativeProducts():
         return self.ladder
 
     def get_score(self, product=None, averages=None):
-        """
-        """
 
         cat_names = ["nutriscore", "ingredients", "nutriments"]
         nut_names = [
