@@ -7,7 +7,7 @@ from django.test import TestCase
 from substitutes.scripts.import_products import ImportProducts
 from substitutes.scripts.relevant_products import RelevantProducts
 from substitutes.scripts.comparative_products import ComparativeProducts
-from substitutes.models import Product
+from substitutes.models import Product, ImportReport
 
 
 class ImportProductTestCase(TestCase):
@@ -62,14 +62,16 @@ class ImportProductTestCase(TestCase):
 
         result = self.import_products.auto_products_import(
             language="fr",
-            min_products=100,
             category_name="produits-a-tartiner-sucres"
         )
+
+        report = ImportReport.objects.all()
 
         self.assertIs(type(self.import_products.off_categories), str)
         self.assertIs(type(self.import_products.off_products), str)
         self.assertIs(type(self.import_products.clear_products), list)
         self.assertIs(type(result), tuple)
+        self.assertEqual(len(report), 1)
 
 class RelevantProductsTestCase(TestCase):
 

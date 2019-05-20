@@ -5,8 +5,8 @@ Import products to Open Food Facts database : https://fr.openfoodfacts.org/
 This module use Openfoodfacts API : https://en.wiki.openfoodfacts.org/API
 """
 
-import requests, json, re
-from substitutes.models import Product
+import requests, json, re, time
+from substitutes.models import Product, ImportReport
 
 
 class ImportProducts():
@@ -22,18 +22,42 @@ class ImportProducts():
         self.off_products = []
         self.clear_products = []
 
-    def auto_products_import(self, language, min_products, category_name):
+        # For import report
+        self.category_name = None
+        self.language = None
+        self.import_lenght = None
+        self.received_products = None
+        self.accepted_products = None
+        self.clear_dict = None
+
+    def auto_products_import(self, language=None, min_products=None, category_name=None):
         """
         This method import products to database.
         """
+
+        if language is None:
+            self.language = "fr"
+        else:
+            self.language = language
+
+        if category_name is None:
+            self.category_name = "produits-a-tartiner-sucres"
+        else:
+            self.category_name = category_name
+
+        start_time = time.time()
+
         self.get_off_categories(language=language, min_products=min_products)
         self.get_off_products(language=language, category_name=category_name)
         self.get_clear_products()
         result = self.send_products_to_database()
 
+        self.import_lenght = time.time() - start_time
+        self.import_report_fill()
+
         return result
 
-    def get_off_categories(self, language, min_products):
+    def get_off_categories(self, language=None, min_products=None):
         """
         This method get Openfoodfact categories who have "X" minium products.
         Use request for ask Openfoodfacts API.
@@ -99,6 +123,7 @@ class ImportProducts():
 
         off_temp_products = []
 
+        products_count = 0
         page_number = 1
         while request_finish is not True :
 
@@ -141,6 +166,7 @@ class ImportProducts():
                             temp_dict[temp_key] = value
 
                 off_temp_products.append(temp_dict)
+                products_count += 1
 
             if page_number == 1:
                 products = data["count"]
@@ -155,6 +181,7 @@ class ImportProducts():
             page_number += 1
 
         self.off_products = json.dumps(off_temp_products)
+        self.received_products = products_count
 
         return self.off_products
 
@@ -190,7 +217,7 @@ class ImportProducts():
         # Settings
         max_lenght_name = 100
         min_lenght_name = 5
-        required_image = 0 # 1 for Yes, 0 for No
+        required_image = 1 # 1 for Yes, 0 for No
         default_image = "default.png"
         required_url = 1
         required_creator = 0
@@ -199,9 +226,9 @@ class ImportProducts():
         required_nutriscore = 1
         required_categories = 1
         required_energy = 1
-        required_energy_kcal = 0
+        required_energy_kcal = 1
         required_energy_kcal_100g = 0
-        required_energy_kj = 0
+        required_energy_kj = 1
         required_energy_kj_100g = 0
         required_ingredients = 1
 
@@ -384,19 +411,23 @@ class ImportProducts():
 
                             if value.get("energy_kcal") is None:
 
-                                if required_energy_kcal == 1:
-                                    errors += 1
-                                    import_data["rejected_nutriments_energy_kcal"] += 1
-                                else:
+                                if value.get("energy_value") and value.get("energy_value") is None:
 
-                                    value["energy_kcal"] = 0
-                                    value["energy_kj"] = 0 * 4.1868
+                                    if required_energy_kcal == 1:
+                                        errors += 1
+                                        import_data["rejected_nutriments_energy_kcal"] += 1
+                                    else:
+                                        value["energy_kcal"] = 0
+                                        value["energy_kj"] = 0
+
+                                else:
+                                    value["energy_kcal"] = value.get("energy_value")
+                                    value["energy_kj"] = value.get("energy_value") * 4.1868
 
                                 if required_energy_kcal_100g == 1:
                                     errors += 1
                                     import_data["rejected_nutriments_energy_kcal_100g"] += 1
                                 else:
-
                                     value["energy_kcal_100g"] = 0
                                     value["energy_kj_100g"] = 0
 
@@ -411,13 +442,17 @@ class ImportProducts():
 
                             if value.get("energy_kj") is None:
 
-                                if required_energy_kj == 1:
-                                    errors += 1
-                                    import_data["rejected_nutriments_energy_kj"] += 1
-                                else:
+                                if value.get("energy_value") and value.get("energy_value") is None:
 
-                                    value["energy_kcal"] = 0
-                                    value["energy_kj"] = 0
+                                    if required_energy_kj == 1:
+                                        errors += 1
+                                        import_data["rejected_nutriments_energy_kj"] += 1
+                                    else:
+                                        value["energy_kcal"] = 0
+                                        value["energy_kj"] = 0
+                                else:
+                                    value["energy_kcal"] = value.get("energy_value") / 4.1868
+                                    value["energy_kj"] = value.get("energy_value")
 
                                 if required_energy_kj_100g == 1:
                                     errors += 1
@@ -498,6 +533,8 @@ class ImportProducts():
 
         import_data["accepted_products"] = len(self.clear_products)
 
+        self.clear_dict = import_data
+
         return self.clear_products
 
     def send_products_to_database(self, products_list=None):
@@ -535,3 +572,31 @@ class ImportProducts():
         db_products = Product.objects.all()
 
         return (len(products_list), len(db_products))
+
+    def import_report_fill(self):
+        """
+        This method fill product import report to database.
+        """
+
+        new_import_report = ImportReport(
+            category_name = self.category_name,
+            language = self.language,
+            lenght = int(self.import_lenght),
+            received_products = self.received_products,
+            accepted_products = len(self.clear_products),
+            rejected_names = self.clear_dict["rejected_names"],
+            rejected_images = self.clear_dict["rejected_images"],
+            rejected_url = self.clear_dict["rejected_url"],
+            rejected_creator = self.clear_dict["rejected_creator"],
+            rejected_stores = self.clear_dict["rejected_stores"],
+            rejected_brands = self.clear_dict["rejected_brands"],
+            rejected_nutriscore = self.clear_dict["rejected_nutriscore"],
+            rejected_nutriments_unit_g = self.clear_dict["rejected_nutriments_unit_g"],
+            rejected_nutriments_energy_unit = self.clear_dict["rejected_nutriments_energy_unit"],
+            rejected_nutriments_energy_kcal = self.clear_dict["rejected_nutriments_energy_kcal"],
+            rejected_nutriments_energy_kj = self.clear_dict["rejected_nutriments_energy_kj"],
+            rejected_categories = self.clear_dict["rejected_categories"],
+            rejected_ingredients = self.clear_dict["rejected_ingredients"],
+        )
+
+        new_import_report.save()
