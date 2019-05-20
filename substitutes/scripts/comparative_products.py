@@ -5,16 +5,16 @@ Algorithm who take an list of products and compare their
 nutritional values with each other.
 """
 
-from substitutes.models import Product
-import json, ast, statistics, time
-
+import json
 from collections import OrderedDict
+from substitutes.models import Product
+
 
 class ComparativeProducts():
 
     def __init__(self):
         """
-        products_list (list): Sample products to compare with the referent product
+        products_list (list): Sample products to compare with the ref product
         ladder        (list): Result of the comparison. (List of products)
         """
 
@@ -24,7 +24,11 @@ class ComparativeProducts():
     def get_substitutes(self, reference=None, sample=None):
 
         averages = self.get_averages(sample=sample)
-        ladder = self.get_ladder(reference=reference, sample=sample, averages=averages)
+        ladder = self.get_ladder(
+            reference=reference,
+            sample=sample,
+            averages=averages
+        )
 
         return ladder
 
@@ -64,20 +68,25 @@ class ComparativeProducts():
             "upper": 0
         }
 
-
         averages = []
 
         for product in sample:
 
-            medians["nutriscore"] = medians["nutriscore"] + int(product.nutriscore)
+            medians[
+                "nutriscore"
+            ] = medians["nutriscore"] + int(product.nutriscore)
 
             product_ingredients = json.loads(product.ingredients)
-            medians["ingredients"] = medians["ingredients"] + len(product_ingredients)
+            medians[
+                "ingredients"
+            ] = medians["ingredients"] + len(product_ingredients)
 
             nutriments = json.loads(product.nutriments)
 
             for nutriment_name in nutriment_names:
-                medians[nutriment_name] = medians[nutriment_name] + nutriments[nutriment_name]
+                medians[
+                    nutriment_name
+                ] = medians[nutriment_name] + nutriments[nutriment_name]
 
         for key, value in medians.items():
 

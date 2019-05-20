@@ -1,6 +1,7 @@
 from django.test import TestCase
 from substitutes.forms import SearchForm
 
+
 class TestForms(TestCase):
 
     def test_expense_form_valid_data(self):
@@ -14,4 +15,3 @@ class TestForms(TestCase):
         form = SearchForm(data={})
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 1)
-

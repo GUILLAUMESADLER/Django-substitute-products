@@ -14,9 +14,9 @@ class TestViews(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(
-            username = "test",
-            email = "test@test.com",
-            password = "testing"
+            username="test",
+            email="test@test.com",
+            password="testing"
         )
 
     def setUp(self):

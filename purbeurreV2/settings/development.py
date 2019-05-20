@@ -35,14 +35,25 @@ DATABASES = {
 }
 
 # SECURITY WARNING: keep the social secret keys used in production secret !
-# In development environment use environment variables stored in a file not tracked by git
 
 # https://console.developers.google.com/
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get(
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get(
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"
+)
 
-SOCIAL_AUTH_GITHUB_KEY = os.environ.get("SOCIAL_AUTH_GITHUB_KEY")
-SOCIAL_AUTH_GITHUB_SECRET = os.environ.get("SOCIAL_AUTH_GITHUB_SECRET")
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get(
+    "SOCIAL_AUTH_GITHUB_KEY"
+)
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get(
+    "SOCIAL_AUTH_GITHUB_SECRET"
+)
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("SOCIAL_AUTH_FACEBOOK_KEY")
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("SOCIAL_AUTH_FACEBOOK_SECRET")
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get(
+    "SOCIAL_AUTH_FACEBOOK_KEY"
+)
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get(
+    "SOCIAL_AUTH_FACEBOOK_SECRET"
+)

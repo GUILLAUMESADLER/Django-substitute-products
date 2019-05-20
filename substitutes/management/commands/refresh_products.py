@@ -25,4 +25,6 @@ class Command(BaseCommand):
             category_name=options["category_name"][0]
         )
 
-        self.stdout.write('Nombres de produits importés : {}'.format(products[1]))
+        self.stdout.write(
+            'Nombres de produits importés : {}'.format(products[1])
+        )

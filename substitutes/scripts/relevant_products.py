@@ -9,22 +9,23 @@ This module need to have use import_products module.
 
 from django.core.exceptions import ObjectDoesNotExist
 from substitutes.models import Product
-import json, time
+import json
+
 
 class RelevantProducts():
 
     def __init__(self, ref_product_id=None, relevant_level="5"):
         """
-        ref_product_id              (int ): ID of reference product enter in parameter.
-        ref_product                 (Obj ): Django reference product orm object.
+        ref_product_id              (int ): ID of ref enter in parameter.
+        ref_product                 (Obj ): Django ref product orm object.
         relevant_products           (list): List of relevant_products.
         relevant_levels             (str ): Relevant level.
         products                    (list): List of database products.
-        name_results                (list): List of products who matched whis ref product.
-        nbr_categories_results      (list): List of products who matched whis ref product.
-        nbr_ingredients_results     (list): List of products who matched whis ref product.
-        first_ingredient_results    (list): List of products who matched whis ref product.
-        first_category_results      (list): List of products who matched whis ref product.
+        name_results                (list): Products list who matched whis ref.
+        nbr_categories_results      (list): Products list who matched whis ref.
+        nbr_ingredients_results     (list): Products list who matched whis ref.
+        first_ingredient_results    (list): Products list who matched whis ref.
+        first_category_results      (list): Products list who matched whis ref.
         """
 
         self.ref_product_id = ref_product_id
@@ -68,9 +69,9 @@ class RelevantProducts():
             self.ref_product = Product.objects.get(
                 id=self.ref_product_id
             )
-            result =  True
+            result = True
         except ObjectDoesNotExist:
-            result =  False
+            result = False
 
         return result
 
@@ -80,7 +81,9 @@ class RelevantProducts():
         same word in their name.
         """
 
-        temp_name_results = Product.objects.filter(name__icontains=self.ref_product.name)
+        temp_name_results = Product.objects.filter(
+            name__icontains=self.ref_product.name
+        )
 
         for product in temp_name_results:
 

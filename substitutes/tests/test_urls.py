@@ -11,6 +11,7 @@ from substitutes.views import results, product, substitutes
 from substitutes.views import favorites, add_favorite, del_favorite
 from substitutes.views import index, legales_notices
 
+
 class TestUrls(TestCase):
 
     def setUp(self):

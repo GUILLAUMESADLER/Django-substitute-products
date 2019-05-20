@@ -2,11 +2,16 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
+
 class TestForms(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user_1 = User.objects.create_user(username="user1", password="password@", email="user1@example.com")
+        cls.user_1 = User.objects.create_user(
+            username="user1",
+            password="password@",
+            email="user1@example.com"
+        )
 
     def test_user_already_exists(self):
         data = {

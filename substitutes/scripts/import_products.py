@@ -5,7 +5,10 @@ Import products to Open Food Facts database : https://fr.openfoodfacts.org/
 This module use Openfoodfacts API : https://en.wiki.openfoodfacts.org/API
 """
 
-import requests, json, re, time
+import requests
+import json
+import re
+import time
 from substitutes.models import Product, ImportReport
 
 
@@ -30,7 +33,12 @@ class ImportProducts():
         self.accepted_products = None
         self.clear_dict = None
 
-    def auto_products_import(self, language=None, min_products=None, category_name=None):
+    def auto_products_import(
+        self,
+        language=None,
+        min_products=None,
+        category_name=None
+    ):
         """
         This method import products to database.
         """
@@ -68,8 +76,9 @@ class ImportProducts():
         For more informations about Openfoodfacts translation read this :
         https://en.wiki.openfoodfacts.org/Translations
 
-        - min_products (int): Each categories contains "X" products. So if you only
-        want to keep categories with at least 20 products. Enter 20 in min_products.
+        - min_products (int): Each categories contains "X" products.
+        So if you only want to keep categories with at least 20 products.
+        Enter 20 in min_products.
         For more informations about Openfoodfacts categories :
         https://world.openfoodfacts.org/categories
 
@@ -82,7 +91,7 @@ class ImportProducts():
         if min_products is None:
             min_products = 100
 
-        request =  requests.get(
+        request = requests.get(
             "https://{}.openfoodfacts.org/categories.json".format(language)
         )
 
@@ -125,18 +134,18 @@ class ImportProducts():
 
         products_count = 0
         page_number = 1
-        while request_finish is not True :
+        while request_finish is not True:
 
             url = "https://{}.openfoodfacts.org/cgi/search.pl".format(language)
 
             params = {
-                'action' : 'process',
-                'tagtype_0' : "categories",
-                'tag_contains_0' : 'contains',
-                'tag_0' : "{}".format(category_name),
-                'page_size' : "1000",
-                'json' : '1',
-                'page' : "{}".format(page_number)
+                'action': 'process',
+                'tagtype_0': "categories",
+                'tag_contains_0': 'contains',
+                'tag_0': "{}".format(category_name),
+                'page_size': "1000",
+                'json': '1',
+                'page': "{}".format(page_number)
             }
 
             request = requests.get(url=url, params=params)
@@ -217,7 +226,7 @@ class ImportProducts():
         # Settings
         max_lenght_name = 100
         min_lenght_name = 5
-        required_image = 1 # 1 for Yes, 0 for No
+        required_image = 1
         default_image = "default.png"
         required_url = 1
         required_creator = 0
@@ -361,12 +370,12 @@ class ImportProducts():
 
                     temp_nutriments = {
                         'carbohydrates': "",
-                        'carbohydrates_100g': "" ,
+                        'carbohydrates_100g': "",
                         'energy_kcal': "",
                         'energy_kcal_100g': "",
                         'energy_kj': "",
                         'energy_kj_100g': "",
-                        'fat': "" ,
+                        'fat': "",
                         'fat_100g': "",
                         'fiber': "",
                         'fiber_100g': "",
@@ -411,66 +420,103 @@ class ImportProducts():
 
                             if value.get("energy_kcal") is None:
 
-                                if value.get("energy_value") and value.get("energy_value") is None:
+                                if value.get("energy_value") and value.get(
+                                    "energy_value"
+                                ) is None:
 
                                     if required_energy_kcal == 1:
                                         errors += 1
-                                        import_data["rejected_nutriments_energy_kcal"] += 1
+                                        import_data[
+                                            "rejected_nutriments_energy_kcal"
+                                        ] += 1
                                     else:
                                         value["energy_kcal"] = 0
                                         value["energy_kj"] = 0
 
                                 else:
-                                    value["energy_kcal"] = value.get("energy_value")
-                                    value["energy_kj"] = value.get("energy_value") * 4.1868
+                                    value[
+                                        "energy_kcal"
+                                    ] = value.get("energy_value")
+                                    value[
+                                        "energy_kj"
+                                    ] = value.get("energy_value") * 4.1868
 
                                 if required_energy_kcal_100g == 1:
                                     errors += 1
-                                    import_data["rejected_nutriments_energy_kcal_100g"] += 1
+                                    import_data[
+                                        "rejected_nutriments_energy_kcal_100g"
+                                    ] += 1
                                 else:
                                     value["energy_kcal_100g"] = 0
                                     value["energy_kj_100g"] = 0
 
                             else:
 
-                                value["energy_kcal"] = value.get("energy")
-                                value["energy_kj"] = value.get("energy_100g") * 4.1868
-                                value["energy_kcal_100g"] = value.get("energy_100g")
-                                value["energy_kj_100g"] = value.get("energy_100g") * 4.1868
+                                value[
+                                    "energy_kcal"
+                                ] = value.get("energy")
+                                value[
+                                    "energy_kj"
+                                ] = value.get("energy_100g") * 4.1868
+                                value[
+                                    "energy_kcal_100g"
+                                ] = value.get("energy_100g")
+                                value[
+                                    "energy_kj_100g"
+                                ] = value.get("energy_100g") * 4.1868
 
                         elif energy_unit == "kj":
 
                             if value.get("energy_kj") is None:
 
-                                if value.get("energy_value") and value.get("energy_value") is None:
+                                if value.get("energy_value") and value.get(
+                                    "energy_value"
+                                ) is None:
 
                                     if required_energy_kj == 1:
                                         errors += 1
-                                        import_data["rejected_nutriments_energy_kj"] += 1
+                                        import_data[
+                                            "rejected_nutriments_energy_kj"
+                                        ] += 1
                                     else:
                                         value["energy_kcal"] = 0
                                         value["energy_kj"] = 0
                                 else:
-                                    value["energy_kcal"] = value.get("energy_value") / 4.1868
-                                    value["energy_kj"] = value.get("energy_value")
+                                    value[
+                                        "energy_kcal"
+                                    ] = value.get("energy_value") / 4.1868
+                                    value[
+                                        "energy_kj"
+                                    ] = value.get("energy_value")
 
                                 if required_energy_kj_100g == 1:
                                     errors += 1
-                                    import_data["rejected_nutriments_energy_kj_100g"] += 1
+                                    import_data[
+                                        "rejected_nutriments_energy_kj_100g"
+                                    ] += 1
                                 else:
 
                                     value["energy_kcal_100g"] = 0
                                     value["energy_kj_100g"] = 0
                             else:
-
-                                    value["energy_kcal"] = value.get("energy") / 4.1868
-                                    value["energy_kj"] = value.get("energy")
-                                    value["energy_kcal_100g"] = value.get("energy_100g") / 4.1868
-                                    value["energy_kj_100g"] = value.get("energy_100g")
+                                value[
+                                    "energy_kcal"
+                                ] = value.get("energy") / 4.1868
+                                value[
+                                    "energy_kj"
+                                ] = value.get("energy")
+                                value[
+                                    "energy_kcal_100g"
+                                ] = value.get("energy_100g") / 4.1868
+                                value[
+                                    "energy_kj_100g"
+                                ] = value.get("energy_100g")
 
                         else:
                             errors += 1
-                            import_data["rejected_nutriments_energy_unit"] += 1
+                            import_data[
+                                "rejected_nutriments_energy_unit"
+                            ] += 1
 
                         for key in temp_nutriments.keys():
 
@@ -481,15 +527,19 @@ class ImportProducts():
 
                             temp_nutriments[key] = round(value_round, 2)
 
-                        #-- SUGARS BLOCK --#
+                        # -- SUGARS BLOCK -- #
                         if value.get('sugars') is None:
                             sugar_value = 0
                         else:
                             sugar_value = float(value.get('sugars'))
 
-                        temp_nutriments['sugars_block'] = int(sugar_value / 5.95)
+                        temp_nutriments[
+                            'sugars_block'
+                        ] = int(sugar_value / 5.95)
 
-                        temp_product["nutriments"] = json.dumps(temp_nutriments)
+                        temp_product[
+                            "nutriments"
+                        ] = json.dumps(temp_nutriments)
 
                     else:
 
@@ -510,7 +560,9 @@ class ImportProducts():
                     else:
 
                         # Remove for example "fr:", "en:"
-                        temp_categories = re.sub(r"[a-zA-Z]*:", "", temp_categories)
+                        temp_categories = re.sub(
+                            r"[a-zA-Z]*:", "", temp_categories
+                        )
 
                         temp_product["categories"] = temp_categories
 
@@ -555,16 +607,16 @@ class ImportProducts():
         for product in products_list:
 
             new_product = Product(
-                name = product['name'],
-                image = product['image'],
-                url = product['url'],
-                creator = product['creator'],
-                brands = product['brands'],
-                stores = product['stores'],
-                nutriscore = product['nutriscore'],
-                categories = product['categories'],
-                ingredients = product['ingredients'],
-                nutriments = product['nutriments']
+                name=product['name'],
+                image=product['image'],
+                url=product['url'],
+                creator=product['creator'],
+                brands=product['brands'],
+                stores=product['stores'],
+                nutriscore=product['nutriscore'],
+                categories=product['categories'],
+                ingredients=product['ingredients'],
+                nutriments=product['nutriments']
             )
 
             new_product.save()
@@ -579,24 +631,32 @@ class ImportProducts():
         """
 
         new_import_report = ImportReport(
-            category_name = self.category_name,
-            language = self.language,
-            lenght = int(self.import_lenght),
-            received_products = self.received_products,
-            accepted_products = len(self.clear_products),
-            rejected_names = self.clear_dict["rejected_names"],
-            rejected_images = self.clear_dict["rejected_images"],
-            rejected_url = self.clear_dict["rejected_url"],
-            rejected_creator = self.clear_dict["rejected_creator"],
-            rejected_stores = self.clear_dict["rejected_stores"],
-            rejected_brands = self.clear_dict["rejected_brands"],
-            rejected_nutriscore = self.clear_dict["rejected_nutriscore"],
-            rejected_nutriments_unit_g = self.clear_dict["rejected_nutriments_unit_g"],
-            rejected_nutriments_energy_unit = self.clear_dict["rejected_nutriments_energy_unit"],
-            rejected_nutriments_energy_kcal = self.clear_dict["rejected_nutriments_energy_kcal"],
-            rejected_nutriments_energy_kj = self.clear_dict["rejected_nutriments_energy_kj"],
-            rejected_categories = self.clear_dict["rejected_categories"],
-            rejected_ingredients = self.clear_dict["rejected_ingredients"],
+            category_name=self.category_name,
+            language=self.language,
+            lenght=int(self.import_lenght),
+            received_products=self.received_products,
+            accepted_products=len(self.clear_products),
+            rejected_names=self.clear_dict["rejected_names"],
+            rejected_images=self.clear_dict["rejected_images"],
+            rejected_url=self.clear_dict["rejected_url"],
+            rejected_creator=self.clear_dict["rejected_creator"],
+            rejected_stores=self.clear_dict["rejected_stores"],
+            rejected_brands=self.clear_dict["rejected_brands"],
+            rejected_nutriscore=self.clear_dict["rejected_nutriscore"],
+            rejected_nutriments_unit_g=self.clear_dict[
+                "rejected_nutriments_unit_g"
+            ],
+            rejected_nutriments_energy_unit=self.clear_dict[
+                "rejected_nutriments_energy_unit"
+            ],
+            rejected_nutriments_energy_kcal=self.clear_dict[
+                "rejected_nutriments_energy_kcal"
+            ],
+            rejected_nutriments_energy_kj=self.clear_dict[
+                "rejected_nutriments_energy_kj"
+            ],
+            rejected_categories=self.clear_dict["rejected_categories"],
+            rejected_ingredients=self.clear_dict["rejected_ingredients"],
         )
 
         new_import_report.save()

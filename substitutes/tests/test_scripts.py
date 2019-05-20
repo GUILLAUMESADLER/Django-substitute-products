@@ -26,13 +26,15 @@ class ImportProductTestCase(TestCase):
         """
         pass
 
-
     def test_get_off_categories_return(self):
         """
         This method test if what we receive from Openfoodfacts is
         a string.
         """
-        categories = self.import_products.get_off_categories(language="fr", min_products=100)
+        categories = self.import_products.get_off_categories(
+            language="fr",
+            min_products=100
+        )
 
         self.assertIs(type(categories), str)
 
@@ -41,7 +43,10 @@ class ImportProductTestCase(TestCase):
         This method test if what we receive from Openfoodfacts is
         a string.
         """
-        products = self.import_products.get_off_products(language="fr", category_name="saucissons")
+        products = self.import_products.get_off_products(
+            language="fr",
+            category_name="saucissons"
+        )
 
         self.assertIs(type(products), str)
 
@@ -50,7 +55,10 @@ class ImportProductTestCase(TestCase):
         This method test if the result of get_clear_products method
         is a list.
         """
-        products = self.import_products.get_off_products(language="fr", category_name="saucissons")
+        products = self.import_products.get_off_products(
+            language="fr",
+            category_name="saucissons"
+        )
         product = self.import_products.get_clear_products()
 
         self.assertIs(type(product), list)
@@ -73,6 +81,7 @@ class ImportProductTestCase(TestCase):
         self.assertIs(type(result), tuple)
         self.assertEqual(len(report), 1)
 
+
 class RelevantProductsTestCase(TestCase):
 
     @classmethod
@@ -90,7 +99,9 @@ class RelevantProductsTestCase(TestCase):
 
         cls.ref_product = Product.objects.all().first()
 
-        cls.relevant_product = RelevantProducts(ref_product_id=cls.ref_product.id)
+        cls.relevant_product = RelevantProducts(
+            ref_product_id=cls.ref_product.id
+        )
 
     def setUp(self):
         """
@@ -129,20 +140,21 @@ class RelevantProductsTestCase(TestCase):
         ing_match = self.relevant_product.nbr_ingredients_match()
         first_ing_match = self.relevant_product.first_ingredient_match()
         first_cat_match = self.relevant_product.first_category_match()
-        relevant_product_lists = self.relevant_product.get_relevant_product_lists()
+        relevant_products = self.relevant_product.get_relevant_product_lists()
 
         self.assertIs(type(name_match), list)
         self.assertIs(type(cat_match), list)
         self.assertIs(type(ing_match), list)
         self.assertIs(type(first_ing_match), list)
         self.assertIs(type(first_cat_match), list)
-        self.assertIs(type(relevant_product_lists), list)
+        self.assertIs(type(relevant_products), list)
 
     def test_get_relevant_products(self):
 
         result = self.relevant_product.get_relevant_products()
 
         self.assertIs(type(result), list)
+
 
 class ComparativeProductsTestCase(TestCase):
 
@@ -165,7 +177,10 @@ class ComparativeProductsTestCase(TestCase):
         cls.ref_product = Product.objects.all().first()
 
         # 3. GET RELEVANT PRODUCTS
-        cls.relevant_product = RelevantProducts(ref_product_id=cls.ref_product.id, relevant_level="5,4,3,2")
+        cls.relevant_product = RelevantProducts(
+            ref_product_id=cls.ref_product.id,
+            relevant_level="5,4,3,2"
+        )
         cls.relevant_products = cls.relevant_product.get_relevant_products()
 
         # 4. GET COMPARATIVE PRODUCTS
@@ -179,20 +194,29 @@ class ComparativeProductsTestCase(TestCase):
         pass
 
     def test_get_averages(self):
-        averages = self.comparative_product.get_averages(sample=self.relevant_products)
+        averages = self.comparative_product.get_averages(
+            sample=self.relevant_products
+        )
         self.assertIs(type(averages), dict)
 
     def test_get_ladder(self):
 
-        averages = self.comparative_product.get_averages(sample=self.relevant_products)
+        averages = self.comparative_product.get_averages(
+            sample=self.relevant_products
+        )
         ladder = self.comparative_product.get_ladder(
-            reference=self.ref_product, sample=self.relevant_products, averages=averages
+            reference=self.ref_product,
+            sample=self.relevant_products,
+            averages=averages
         )
 
         self.assertIs(type(ladder), list)
 
     def test_get_substitutes(self):
 
-        substitutes = self.comparative_product.get_substitutes(reference=self.ref_product, sample=self.relevant_products)
+        substitutes = self.comparative_product.get_substitutes(
+            reference=self.ref_product,
+            sample=self.relevant_products
+        )
 
         self.assertIs(type(substitutes), list)

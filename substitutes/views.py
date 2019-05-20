@@ -7,7 +7,9 @@ from .models import Product
 from substitutes.scripts.relevant_products import RelevantProducts
 from substitutes.scripts.comparative_products import ComparativeProducts
 
-import re, json
+import re
+import json
+
 
 def index(request):
 
@@ -17,6 +19,7 @@ def index(request):
         research = form.cleaned_data['research']
 
     return render(request, 'substitutes/index.html', locals())
+
 
 def results(request, name=None):
     """
@@ -55,6 +58,7 @@ def results(request, name=None):
         'title': search
         })
 
+
 @login_required(login_url='/login/')
 def favorites(request):
 
@@ -76,6 +80,7 @@ def favorites(request):
         'products': products,
         'title': 'Vos favoris'})
 
+
 @login_required(login_url='/login/')
 def add_favorite(request, id):
 
@@ -84,6 +89,7 @@ def add_favorite(request, id):
     profile.favorites.add(product)
 
     return favorites(request)
+
 
 @login_required(login_url='/login/')
 def del_favorite(request, id):
@@ -94,6 +100,7 @@ def del_favorite(request, id):
 
     return favorites(request)
 
+
 def substitutes(request, id):
     """
     Search in database the products substituable to the reference
@@ -101,13 +108,19 @@ def substitutes(request, id):
     """
 
     # Get relevant products for comparison
-    new_relevant_products = RelevantProducts(ref_product_id=id, relevant_level="5,4,3")
+    new_relevant_products = RelevantProducts(
+        ref_product_id=id,
+        relevant_level="5,4,3"
+    )
     relevant_products = new_relevant_products.get_relevant_products()
     reference = new_relevant_products.ref_product
 
     # Start the comparise with relevant products and reference product
     comparate_products = ComparativeProducts()
-    substitutes = comparate_products.get_substitutes(reference=reference, sample=relevant_products)
+    substitutes = comparate_products.get_substitutes(
+        reference=reference,
+        sample=relevant_products
+    )
 
     paginator = Paginator(substitutes, 5)
 
@@ -123,14 +136,16 @@ def substitutes(request, id):
 
     return render(
         request, 'substitutes/sub_result.html', {
-        'ref_product': reference,
-        'products': products,
-        'title': reference.name
+            'ref_product': reference,
+            'products': products,
+            'title': reference.name
         }
     )
 
+
 def legales_notices(request):
     return render(request, 'substitutes/legales_notices.html')
+
 
 def product(request, id):
 
@@ -140,7 +155,10 @@ def product(request, id):
     ingredients = json.loads(product.ingredients)
 
     # Get relevant products for comparison
-    new_relevant_products = RelevantProducts(ref_product_id=product.id, relevant_level="5,4,3")
+    new_relevant_products = RelevantProducts(
+        ref_product_id=product.id,
+        relevant_level="5,4,3"
+    )
     relevant_products = new_relevant_products.get_relevant_products()
 
     comparate_products = ComparativeProducts()

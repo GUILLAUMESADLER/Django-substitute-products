@@ -34,15 +34,30 @@ urlpatterns = [
     path('favorites', sub_views.favorites, name='favorites'),
     path('del_favorite/<int:id>', sub_views.del_favorite, name='del_favorite'),
     path('add_favorite/<int:id>', sub_views.add_favorite, name='add_favorite'),
-    path('legales_notices/', sub_views.legales_notices, name='legales_notices'),
+    path(
+        'legales_notices/',
+        sub_views.legales_notices,
+        name='legales_notices'
+    ),
     # USERS APP
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path(
+        'login/',
+        auth_views.LoginView.as_view(template_name='users/login.html'),
+        name='login'
+    ),
+    path(
+        'logout/',
+        auth_views.LogoutView.as_view(template_name='users/logout.html'),
+        name='logout'
+    ),
     # SOCIAL AUTH MODULE
     url(r'^auth/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
