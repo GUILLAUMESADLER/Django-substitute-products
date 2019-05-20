@@ -12,7 +12,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(
-                request, f'Votre compte à bien été créé !'
+                request, 'Votre compte à bien été créé !'
             )
             return redirect('login')
     else:
