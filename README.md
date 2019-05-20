@@ -189,3 +189,40 @@ $ python manage.py products_import
 
 ## Product
 
+- <b>name</b> (Char)
+
+Example : Saucisson sec
+- <b>image</b> (Url)
+
+Example : https://static.openfoodfacts.org/images/products/68740269/front_fr.5.400.jpg
+
+- <b>url</b> (Char)
+
+Example : https://fr.openfoodfacts.org/produit/68740269/saucisson-sec-louis-auvergne
+
+- <b>creator</b> (Char)
+
+Example: openfoodfacts-contributors
+
+- <b>brands</b> (Char)
+
+Example : louis auvergne
+
+- <b>stores</b> (Text)
+
+Example : inter marché
+
+- <b>nutriscore</b> (Int)
+
+Example : 5
+
+- <b>categories</b> (Text)
+
+Example : meats,prepared-meats,saucissons,saucissons-secs
+- <b>ingredient</b> (Text)
+
+Example : [{"text": "maigre et gras de porc", "rank": 1, "id": "fr:maigre-et-gras-de-porc"}, {"rank": 2, "id": "fr:jambon-de-porc", "percent": "25", "text": "jambon de porc"}, {"id": "en:salt", "rank": 3, "text": "sel"}, {"rank": 4, "id": "en:lactose", "text": "lactose"}, {"id": "fr:dextrose  saccharose  \u00e9pices alcool ferments lactique conservateur", "rank": 5, "text": "dextrose  saccharose  \u00e9pices alcool ferments lactique conservateur"}, {"id": "fr:e252", "text": "E252"}, {"id": "fr:boyau-naturel-de-porc", "text": "boyau naturel de porc"}]
+
+- <b>nutriments</b> (Text)
+
+Example : {"carbohydrates": 1.4, "carbohydrates_100g": 1.4, "energy_kcal": 382.0, "energy_kcal_100g": 0.0, "energy_kj": 1599.36, "energy_kj_100g": 0.0, "fat": 28.7, "fat_100g": 28.7, "fiber": 0.0, "fiber_100g": 0.0, "proteins": 29.6, "proteins_100g": 29.6, "salt": 5.42, "salt_100g": 5.42, "saturated-fat": 12.2, "saturated-fat_100g": 12.2, "sodium": 2.13, "sodium_100g": 2.13, "sugars": 1.37, "sugars_100g": 1.37, "sugars_block": 0}
