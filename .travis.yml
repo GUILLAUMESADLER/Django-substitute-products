@@ -5,11 +5,15 @@ python:
 before_script:
   - pip install -r requirements.txt
 
+branches:
+    only:
+        - staging
+
 env: DJANGO_SETTINGS_MODULE="purbeurrev2.settings.travis"
 
 services:
   - postgresql
 
 script:
-  - ./manage.py test substitutes
-  - ./manage.py test users
+  - python manage.py test substitutes
+  - python manage.py test users
