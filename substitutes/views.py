@@ -152,6 +152,7 @@ def product(request, id):
     # Get product
     product = Product.objects.get(id=id)
     nutriments = json.loads(product.nutriments)
+    saturated_fat = nutriments["saturated-fat"]
     ingredients = json.loads(product.ingredients)
 
     # Get relevant products for comparison
@@ -163,13 +164,14 @@ def product(request, id):
 
     comparate_products = ComparativeProducts()
     averages = comparate_products.get_averages(sample=relevant_products)
-
-    ingredients_nbr = len(ingredients)
+    average_saturated_fat = averages["saturated-fat"]
 
     return render(request, 'substitutes/product.html', {
         'product': product,
         'nutriments': nutriments,
         'ingredients': ingredients,
-        'ingredients_nbr': ingredients_nbr,
-        'averages': averages
+        'ingredients_nbr': len(ingredients),
+        'saturated_fat': saturated_fat,
+        'averages': averages,
+        'average_saturated_fat':average_saturated_fat
         })

@@ -161,13 +161,13 @@
                 <div class="col-1">
                     <button
                         type="button"
-                        class="btn {% if saturated_fat > averages.saturated_fat %} btn-danger {% else %} btn-success {% endif %} nutriments-popover"
+                        class="btn {% if saturated_fat > average_saturated_fat %} btn-danger {% else %} btn-success {% endif %} nutriments-popover"
                         data-container="body"
                         data-toggle="popover"
                         data-placement="top"
                         data-trigger="focus"
-                        data-content="{% if saturated_fat > averages.saturated_fat %} Ce produit contient plus d'ingrédients que la moyenne. {% else %} Ce produit contient moins d'ingrédients que la moyenne. {% endif %}">
-                        {{ nutriments.saturated_fat }}
+                        data-content="{% if saturated_fat > average_saturated_fat %} Ce produit contient plus de graisse saturé que la moyenne. {% else %} Ce produit contient moins de graisse saturé que la moyenne. {% endif %}">
+                        {{ saturated_fat }}
                     </button>
                 </div>
                 <div class="col-1">
@@ -295,7 +295,7 @@
                     <p>{{ averages.salt }}</p>
                 </div>
                 <div class="col-1">
-                    <p>{{ averages.saturated_fat }}</p>
+                    <p>{{ average_saturated_fat }}</p>
                 </div>
                 <div class="col-1">
                     <p>{{ averages.sodium }}</p>
