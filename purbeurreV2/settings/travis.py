@@ -17,3 +17,14 @@ SECRET_KEY = 'i2d#l63_88kv)(ic52shwa9!lzdf@fso3*1d#^#pa^eif_k%v5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
