@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 from purbeurreV2.settings.common import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i2d#l63_88kv)(ic52shwa9!lzdf@fso3*1d#^#pa^eif_k%v5'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -27,9 +27,9 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'purbeurrev2',
-        'USER': 'purbeurreuser',
-        'PASSWORD': 'purbeurrePass',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '',
     }
